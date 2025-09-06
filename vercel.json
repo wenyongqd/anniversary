@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "app/api/gemini-config/route.ts": {
+      "runtime": "@vercel/node"
+    },
+    "app/api/upload/route.ts": {
+      "runtime": "@vercel/node"
+    },
+    "app/api/upload-image/route.ts": {
+      "runtime": "@vercel/node"
+    }
+  }
+}
