@@ -123,7 +123,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = (props) => {
     const isEditable = status === 'idle';
 
     return (
-        <div className="bg-neutral-100 dark:bg-neutral-100 !p-4 !pb-24 flex flex-col items-center justify-start aspect-[3/4] w-80 max-w-full rounded-md shadow-lg relative group">
+        <div className="bg-neutral-100 dark:bg-neutral-100 !p-2 sm:!p-4 !pb-16 sm:!pb-24 flex flex-col items-center justify-start aspect-[3/4] w-full sm:w-80 max-w-[200px] sm:max-w-full rounded-md shadow-lg relative group">
             <div className="w-full bg-neutral-900 shadow-inner flex-grow relative overflow-hidden">
                  <AnimatePresence>
                     {status === 'pending' && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-10"><LoadingSpinner /></motion.div>}
@@ -185,7 +185,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = (props) => {
                     )}
                 </AnimatePresence>
             </div>
-            <div className="absolute bottom-4 left-4 right-4 text-center px-2 flex flex-col gap-1">
+            <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 text-center px-1 sm:px-2 flex flex-col gap-0.5 sm:gap-1">
                  <input
                     type="text"
                     value={date}
@@ -193,7 +193,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = (props) => {
                     placeholder="Date or Caption"
                     readOnly={!isEditable}
                     className={cn(
-                        "font-permanent-marker text-lg truncate w-full bg-transparent text-center focus:outline-none focus:ring-1 focus:ring-yellow-500 rounded-sm",
+                        "font-permanent-marker text-sm sm:text-lg truncate w-full bg-transparent text-center focus:outline-none focus:ring-1 focus:ring-yellow-500 rounded-sm",
                         status === 'done' ? 'text-black' : 'text-neutral-800',
                         isEditable ? 'cursor-text' : 'cursor-default'
                     )}
@@ -205,7 +205,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = (props) => {
                     rows={2}
                     readOnly={!isEditable}
                     className={cn(
-                        "font-permanent-marker text-sm w-full bg-transparent text-center resize-none focus:outline-none focus:ring-1 focus:ring-yellow-500 rounded-sm text-neutral-600",
+                        "font-permanent-marker text-xs sm:text-sm w-full bg-transparent text-center resize-none focus:outline-none focus:ring-1 focus:ring-yellow-500 rounded-sm text-neutral-600",
                         isEditable ? 'cursor-text' : 'cursor-default'
                     )}
                 />

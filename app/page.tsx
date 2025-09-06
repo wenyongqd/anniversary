@@ -52,12 +52,20 @@ export default function Page() {
     const [cloudSaveState, setCloudSaveState] = useState<{ status: CloudSaveStatus; url?: string; error?: string }>({ status: 'idle' });
     const [isSharedView, setIsSharedView] = useState<boolean>(false);
     const [isMounted, setIsMounted] = useState<boolean>(false);
+    const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
     const dragAreaRef = useRef<HTMLElement | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const idCounterRef = useRef<number>(0);
 
     useEffect(() => {
         setIsMounted(true);
+        
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     useEffect(() => {
@@ -344,12 +352,32 @@ export default function Page() {
             return x - Math.floor(x);
         };
         
+        // Check if mobile screen
+        const isMobile = windowWidth < 640;
+        
         // More scattered layout for shared view
         if (isSharedView) {
+            if (isMobile) {
+                // Mobile layout: more scattered with offset up and right
+                return Array(photos.length + 1).fill(0).map((_, index) => ({
+                    x: 40 + (simpleRandom(index * 7) - 0.5) * 100 + (index % 2 === 0 ? -40 : 40),
+                    y: -20 + (index * 35) + (simpleRandom(index * 11) - 0.5) * 60,
+                    rotate: (simpleRandom(index * 13) - 0.5) * 25,
+                }));
+            }
             return Array(photos.length + 1).fill(0).map((_, index) => ({
                 x: (index - photos.length / 2) * 160 + (simpleRandom(index * 7) - 0.5) * 280,
                 y: (simpleRandom(index * 11) - 0.5) * 220,
                 rotate: (simpleRandom(index * 13) - 0.5) * 45,
+            }));
+        }
+        
+        if (isMobile) {
+            // Mobile layout for regular view
+            return Array(photos.length + 1).fill(0).map((_, index) => ({
+                x: (index - photos.length / 2) * 70 + (simpleRandom(index * 7) - 0.5) * 40,
+                y: 50 + (simpleRandom(index * 11) - 0.5) * 80,
+                rotate: (simpleRandom(index * 13) - 0.5) * 25,
             }));
         }
         
@@ -358,7 +386,7 @@ export default function Page() {
             y: (simpleRandom(index * 11) - 0.5) * 150,
             rotate: (simpleRandom(index * 13) - 0.5) * 60,
         }));
-    }, [photos.length, isMounted, isSharedView]);
+    }, [photos.length, isMounted, isSharedView, windowWidth]);
 
     const hasGeneratedPhotos = photos.some(p => p.status === 'done');
     const hasPhotos = photos.length > 0;
@@ -366,16 +394,19 @@ export default function Page() {
 
 
     return (
-        <main ref={dragAreaRef} className="bg-black text-neutral-200 min-h-screen w-full flex flex-col items-center justify-center p-4 pb-40 overflow-hidden relative">
+        <main ref={dragAreaRef} className="bg-black text-neutral-200 min-h-screen w-full flex flex-col items-center justify-center p-2 sm:p-4 pb-20 sm:pb-40 overflow-hidden relative">
             <MusicPlayer isSharedView={isSharedView} />
             <div className="absolute top-0 left-0 w-full h-full bg-grid-white/[0.05]"></div>
             
             <div className="z-10 flex flex-col items-center justify-center w-full h-full flex-1 min-h-0">
-                <header className="text-center my-10">
-                    <h1 className="text-6xl md:text-8xl font-caveat font-bold text-neutral-100">First Anniversary</h1>
-                    <p className="font-permanent-marker text-neutral-300 mt-2 text-xl tracking-wide">
-                        Generate a new timeline.
-                    </p>
+                <header className="text-center my-2 sm:my-4 md:my-10">
+                    <h1 className="text-4xl sm:text-6xl md:text-8xl font-caveat font-bold text-neutral-100">First Anniversary</h1>
+                    <p className="font-caveat text-2xl sm:text-3xl md:text-4xl text-neutral-200 mt-1">我爱你</p>
+                    {!isSharedView && (
+                        <p className="font-permanent-marker text-neutral-300 mt-1 sm:mt-2 text-sm sm:text-xl tracking-wide">
+                            Generate a new timeline.
+                        </p>
+                    )}
                 </header>
                 
                 <div className="w-full h-full flex-1 flex items-center justify-center">
@@ -415,15 +446,15 @@ export default function Page() {
                                 <DraggableCardBody dragConstraintsRef={dragAreaRef} className="!p-0 !bg-transparent !shadow-none">
                                     <div
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="bg-neutral-100 dark:bg-neutral-100 !p-4 !pb-24 flex flex-col items-center justify-center aspect-[3/4] w-80 max-w-full rounded-md shadow-lg relative cursor-pointer group hover:bg-neutral-200 transition-colors"
+                                        className="bg-neutral-100 dark:bg-neutral-100 !p-2 sm:!p-4 !pb-16 sm:!pb-24 flex flex-col items-center justify-center aspect-[3/4] w-full sm:w-80 max-w-[200px] sm:max-w-full rounded-md shadow-lg relative cursor-pointer group hover:bg-neutral-200 transition-colors"
                                     >
-                                        <div className="w-full bg-neutral-900 shadow-inner flex-grow relative overflow-hidden flex flex-col items-center justify-center text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 text-center p-4">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                                        <div className="w-full bg-neutral-900 shadow-inner flex-grow relative overflow-hidden flex flex-col items-center justify-center text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 text-center p-2 sm:p-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 sm:h-16 sm:w-16 mb-1 sm:mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
-                                            <span className="font-permanent-marker text-xl">Add Photo</span>
-                                            <span className="text-sm mt-1">or load a saved timeline (.json)</span>
+                                            <span className="font-permanent-marker text-sm sm:text-xl">Add Photo</span>
+                                            <span className="text-xs sm:text-sm mt-1">or load a saved timeline (.json)</span>
                                              {isUploading && (
                                                 <div className="absolute bottom-2 left-2 right-2 text-xs text-yellow-400 font-semibold">Uploading...</div>
                                              )}

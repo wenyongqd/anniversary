@@ -2,7 +2,7 @@
   "version": 1,
   "functions": {
     "/api/gemini-config": {},
-    "/api/upload": {},
-    "/api/upload-image": {}
+    "/api/upload-image": {},
+    "/api/upload": {}
   }
 }
