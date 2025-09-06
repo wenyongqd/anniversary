@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: [],
   },
+  serverExternalPackages: ['@vercel/blob'],
 }
 
 export default nextConfig

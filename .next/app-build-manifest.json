@@ -15,12 +15,12 @@
       "static/css/e0b71ccca0febc80.css",
       "static/chunks/app/layout-00a7dbd03881103e.js"
     ],
-    "/api/upload-image/route": [
+    "/api/gemini-config/route": [
       "static/chunks/webpack-265ab50107ee51ba.js",
       "static/chunks/2c913ea3-f77b522ca87815ac.js",
       "static/chunks/341-2d546ef92ef35bc1.js",
       "static/chunks/main-app-eab02efe7c4de5dc.js",
-      "static/chunks/app/api/upload-image/route-26afa1e6134d27b7.js"
+      "static/chunks/app/api/gemini-config/route-26afa1e6134d27b7.js"
     ],
     "/api/upload/route": [
       "static/chunks/webpack-265ab50107ee51ba.js",
@@ -29,12 +29,12 @@
       "static/chunks/main-app-eab02efe7c4de5dc.js",
       "static/chunks/app/api/upload/route-26afa1e6134d27b7.js"
     ],
-    "/api/gemini-config/route": [
+    "/api/upload-image/route": [
       "static/chunks/webpack-265ab50107ee51ba.js",
       "static/chunks/2c913ea3-f77b522ca87815ac.js",
       "static/chunks/341-2d546ef92ef35bc1.js",
       "static/chunks/main-app-eab02efe7c4de5dc.js",
-      "static/chunks/app/api/gemini-config/route-26afa1e6134d27b7.js"
+      "static/chunks/app/api/upload-image/route-26afa1e6134d27b7.js"
     ],
     "/page": [
       "static/chunks/webpack-265ab50107ee51ba.js",
